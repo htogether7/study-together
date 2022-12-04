@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* font-family: Nunito, Arial, sans-serif; */
+}
+
+.header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 0 15px;
+  justify-content: space-between;
+  z-index: 5;
+  position: relative;
+}
+
+.header > h1 {
+  color: #627DFE;
+  font-size: 1.5rem;
+}
+
+.header h1 {
+  color: #627DFE;
+  font-size: 30px;
+}
+
+.signup {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 0px;
+  background: #cfe8fc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% - 60px);
+}
+
+.signup .signupContainer {
+  /* padding: 60px; */
+  /* margin: auto; 이걸로 하면 완전 중앙에 온다.. margin-top 으로 조절해줘야함*/
+  width: 50%;
+  max-width: 500px;
+  min-height: 500px;
+  flex-direction: column;
+  justify-content: center;
+  /* background: radial-gradient(
+    ellipse at left bottom,
+    rgba(22, 24, 47, 1) 0%,
+    rgba(38, 20, 72, 0.9) 59%,
+    rgba(17, 27, 75, 0.9) 100%
+  ); */
+  
+  /* 여기부터 다름 */
+  box-shadow: 0 50px 70px -20px rgba(0, 0, 0, 0.8);
+  padding: 18px 20px 20px 15px;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
+  width: 800px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup .signupContainer .text {
+  display: flex;
+  justify-content: center;
+  height: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .box {
+	margin-top: 50px;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+
+}
+
+.signup .signupContainer .box > h2{
+  color: #627DFE;
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 10px;	
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .box > p{
+  color: yellowgreen;
+  font-size: 20px;
+  margin-left: 23px;
+}
+
+.signup .signupContainer .box .errorMsg{
+  color: red;
+	/* 이거 크기 줄이기! */
+  font-size: 17px; 
+  margin-left: 23px;
+
+}
+
+.signup .signupContainer .box .small{
+  color: violet;
+  font-size: 14px;
+  margin-left: 25px;
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .box > input[type=text], input[type=password]{
+  border: 0;
+  border-bottom: 1px solid #f2f3f8;
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-left: 60px;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  width: 250px;
+}
+
+.signup .signupContainer .box > input::placehoder {
+  color: yellowgreen;
+  font-size: 15px;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .box > input::-webkit-input-placeholder {
+	/* 크롬은 여기서! */
+  color: yellowgreen;
+  font-size: 15px;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+.signup .signupContainer .box > input::-ms-input-placeholder {
+  color: yellowgreen;
+  font-size: 15px;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .footer { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.signup .signupContainer .footer .blank {
+  display: flex;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.signup .signupContainer .footer .blank .btn-submit-form1 {
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding: 15px 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  font-family: Nunito, sans-serif;
+  background: #6381e8;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.13);
+  transition: all 0.2s ease;
+  margin-bottom: 25px;  
+	margin-right: -15px; 
+  width: 125px;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .footer .blank .btn-submit-form1:hover {
+    background:rgb(255, 255, 255);
+    box-shadow:0px 2px 10px 5px #97B1BF;
+    color:#000;
+}
+
+.signup .signupContainer .footer .blank .btn-submit-form2 {
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding: 15px 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  font-family: Nunito, sans-serif;
+  background: #6381e8;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.13);
+  transition: all 0.2s ease;
+  margin-bottom: 25px;  
+  width: 125px;
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+.signup .signupContainer .footer .blank .btn-submit-form2:hover {
+    background:rgb(255, 255, 255);
+    box-shadow:0px 2px 10px 5px #97B1BF;
+    color:#000;
+}
+
+.signup .signupContainer .errorMsg {
+  color: red;
+  font-size: 18px;
+  text-align: center;
+  height: 3px;
+  padding: 0 0px;
+  margin-right: 50px;
+  margin-bottom: 25px;
+  font-family: 'Gowun Dodum', sans-serif;
+  
+	
+}

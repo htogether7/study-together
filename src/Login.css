@@ -27,12 +27,13 @@
     text-decoration: none;
     color: #627DFE;
     font-size: 1.2 rem;
-    font-family: 'Gowun Dodum', sans-serif;
+    font-family: Atma; /*sans-serif;*/
 }
 
 .header h1 {
     color: #627DFE;
     font-size: 30px;
+    
 }
 
 /* 전체 배경 파란색 */
@@ -88,7 +89,6 @@
     /* text-align: center; */
     margin-bottom: 30px;
     font-size: 2 rem;
-    font-family: 'Gowun Dodum', sans-serif; 
     margin-top: 20px;
 }
 
@@ -179,6 +179,12 @@
     margin-right: 20px;
     /* font-family: 'Gowun Dodum', sans-serif; 달구색: 6381e8  */
 }
+
+.login .loginContainer .btn-submit-form1:hover {
+    background:rgb(255, 255, 255);
+    box-shadow:0px 2px 10px 5px #97B1BF;
+    color:#000;
+}
   
 .login .loginContainer .btn-submit-form2 {
     border: 0;
@@ -199,3 +205,20 @@
     margin-left: 30px;
     /* font-family: 'Gowun Dodum', sans-serif;  */
 }
+
+.login .loginContainer .btn-submit-form2:hover {
+    background:rgb(255, 255, 255);
+    box-shadow:0px 2px 10px 5px #97B1BF;
+    color:#000;
+}
+
+.login .loginContainer .errorMsg {
+    color: red;
+    font-size: 15px;
+    text-align: center;
+    height: 3px;
+    padding: 0 0px;
+    margin-bottom: 30px;
+    /* font-family: 'Nanum Pen Script', cursive; */
+    font-family: 'Gowun Dodum', sans-serif;
+  }

@@ -34,7 +34,7 @@
   /* margin-left: 500px; */
 }
 
-.home { 
+.studyboard { 
   width: 100%;
   min-height: 100vh;
   padding: 0 0px;
@@ -48,7 +48,7 @@
 }
 
 /* 흰색 가운데 상자 */
-.home .homeContainer {
+.studyboard .studyboardContainer {
   /* padding: 60px; */
   /* margin: auto; 이걸로 하면 완전 중앙에 온다.. margin-top 으로 조절해줘야함*/
   width: 100%;
@@ -80,16 +80,17 @@
   /* text-align: center; */
 }
 
-.home .homeContainer .text {
+.studyboard .studyboardContainer .text {
   text-align: center;
   color: #627DFE;
+  margin-top: -10px;
   margin-bottom: 10px;
   font-size: 2 rem;
   font-family: 'Gowun Dodum', sans-serif; 
-  margin-top: -10px;
+  /* margin-top: -10px; */
 }
 
-.home .homeContainer .study-box {
+.studyboard .studyboardContainer .studyboard-box {
   /* text-align: left; */
   /* display: flex; */
   text-align: center;
@@ -97,15 +98,41 @@
   margin-left: 30px;
 }
 
-/* 이거 길을 잃었다.. */
-.home .homeContainer .study-box .text > h2 {
+.studyboard .studyboardContainer .studyboard-box .text > h2 {
   text-align: left;
   font-family: 'Gowun Dodum', sans-serif; 
+  /* color: #000000; */
   margin-left: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
-.home .homeContainer .study-box .study-box-box {
+.studyboard .studyboardContainer .studyboard-box .left-box {
+    text-align: left;
+    background: #cfe8fc;
+    /* border-bottom: 1px solid #eee; */
+    box-shadow: 0 50px 70px -40px rgba(0, 0, 0, 0.2);
+    padding: 18px 20px 20px 15px;
+    border-radius: 5px;
+    color: #000000;
+    height: 160px;
+    margin-left: 20px;
+    margin-bottom: 50px;
+}
+
+.studyboard .studyboardContainer .studyboard-box .left-box > h3 {
+    margin-left: 20px;
+}
+
+.studyboard .studyboardContainer .studyboard-box .right-box {
+    margin-top: 20px;
+}
+  
+.studyboard .studyboardContainer .studyboard-box .right-box .text > h3 {
+    margin-top: 30px;
+    color: #000000;
+}
+
+.studyboard .studyboardContainer .studyboard-box-box {
   /* width: 100%;
   height: 100%;
   margin: 0 10px;
@@ -126,13 +153,13 @@
   margin-bottom: 10px;
 }
 
-.home .btn-space {
+.studyboard .btn-space {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.home .btn-space .btn-study {
+.studyboard .btn-space .btn-study {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -156,13 +183,13 @@
   overflow: hidden;
 }
 
-.home .btn-space .btn-study:hover {
+.studyboard .btn-space .btn-study:hover {
   background:rgb(255, 255, 255);
   box-shadow:0px 2px 10px 5px #97B1BF;
   color:#000;  
 }
 
-.home .btn-space .btn-course {
+.studyboard .btn-space .btn-course {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -186,13 +213,13 @@
   overflow: hidden;
 }
 
-.home .btn-space .btn-course:hover {
+.studyboard .btn-space .btn-course:hover {
   background:rgb(255, 255, 255);
   box-shadow:0px 2px 10px 5px #97B1BF;
   color:#000;  
 }
 
-.home .homeContainer .study-box .input-text-field {
+.studyboard .studyboardContainer .studyboard-box .input-text-field {
 	display: flex;
   flex-direction: column;
 	margin-top: 0px;
@@ -201,7 +228,7 @@
   /* align-items: center; */
 }
 	
-.home .homeContainer .study-box .input-text-field > input[type=text] {
+.studyboard .studyboardContainer .studyboard-box .input-text-field > input[type=text] {
   border: 0;
   border-bottom: 2px solid #f2f3f8;
   /* text-align: center; */
@@ -218,7 +245,7 @@
 }
 
 /* btn-search */
-.home .homeContainer .study-box .input-text-field .btn-search {
+.studyboard .studyboardContainer .studyboard-box .input-text-field .btn-search {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -249,13 +276,13 @@
 }
 
 /* #97B1B */
-.home .homeContainer .study-box .input-text-field .btn-search:hover{
+.studyboard .studyboardContainer .studyboard-box .input-text-field .btn-search:hover{
    background:rgb(255, 255, 255);
    box-shadow:0px 2px 10px 5px #97B1BF;
    color:#000;
 }
 
-.home .footer .blank {
+.studyboard .footer .blank {
   display: flex;
   margin-top: 20px;
   /* margin-bottom: 20px; */
@@ -264,7 +291,7 @@
   /* margin-right: 20px; */
 }
 
-.home .footer .blank .btn-logout {
+.studyboard .footer .blank .btn-logout {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -287,7 +314,7 @@
   overflow: hidden;
 }
 
-.home .footer .blank .btn-logout:hover {
+.studyboard .footer .blank .btn-logout:hover {
   background:rgb(255, 255, 255);
   box-shadow:0px 2px 10px 5px #97B1BF;
   color:#000;

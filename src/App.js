@@ -4,6 +4,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Signup from './Signup.js';
 import Login from './Login.js'
 import Home from './Home.js';
+import CoursePage from './CoursePage.js';
+import StudyBoardPage from './StudyBoardPage.js';
 // import Main from './Home.js';
 // import Soldier from './Soldier.js';
 // import Give_points from './Give_points';
@@ -22,6 +24,8 @@ class App extends React.Component {
 					<Route path="/" exact={true} element={<Login/>} /> 
 					<Route path="/Signup" element={<Signup/>} /> 
 					<Route path="/Home" element={<Home/>} />
+					<Route path="/CoursePage" element={<CoursePage/>} />
+					<Route path="/StudyBoardPage" element={<StudyBoardPage/>} />
 				</Routes>
 			</HashRouter>
 			

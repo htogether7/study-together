@@ -13,18 +13,24 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 
 function Home(props){
 
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const [name, setName] = useState("");
-    const [studentNumber, setstudentNumber] = useState("");
+    const [student_number, setstudent_number] = useState("");
+    const [track, setTrack] = useState("");
 
     const [study_name, setstudy_name] = useState([]);
     const [leader_id, setleader_id] = useState([]);
     const [number_limit, setnumber_limit] = useState([]);
+    const [study_introduction, setstudy_introduction] = useState([]);
+
     const [course_id, setcourse_id] = useState([]);
+    const [course_name, setcourse_name] = useState([]);
+    const [professor_name, setprofessor_name] = useState([]);
 
     const [info, setInfo] = useState([
         // {
@@ -36,7 +42,7 @@ function Home(props){
     ]);
 
     const location = useLocation();
-
+    const navigate = useNavigate();
     // console.log(props.location.state);
 
     const setUp = () => {
@@ -47,22 +53,23 @@ function Home(props){
         // .then((response) => {
         //     console.log("response.data: ", response.data);
         //     setName(response.data.name);
-        //     setstudentNumber(response.data.studentNumber);
+        //     setstudent_number(response.data.student_number);
         // });
     };
 
-    const getName = () => {
+    const getName = async() => {
         console.log("id: ", id);
-        axios.get(`http://localhost:3001/api/home?id=${id}&pw=${pw}`)
+        await axios.get(`http://localhost:3001/api/home?id=${id}&pw=${pw}`)
         .then((response) => {
             console.log("response.data: ", response.data);
             setName(response.data.name);
-            setstudentNumber(response.data.studentNumber);
+            setstudent_number(response.data.student_number);
+            setTrack(response.data.track);
         });
     }
 
-    const getStudy = () => {
-        axios.get(`http://localhost:3001/api/study?id=${id}&pw=${pw}`)
+    const getStudy = async() => {
+        await axios.get(`http://localhost:3001/api/study?id=${id}&pw=${pw}`)
         .then((response) => {
             // console.log("response.data 22: ", response.data.study_name);
             // console.log("response.data 33: ", response.data.learder_id);
@@ -73,6 +80,7 @@ function Home(props){
             setleader_id(response.data.leader_id);
             setnumber_limit(response.data.number_limit);
             setcourse_id(response.data.course_id);
+            setstudy_introduction(response.data.study_introduction);
 
             // response.data.info.map((item) => {
             //     console.log("item: ", item);
@@ -102,15 +110,75 @@ function Home(props){
         console.log("leader_id: ", leader_id);
         console.log("number_limit: ", number_limit);
         console.log("course_id: ", course_id);
+        console.log("study_introduction: ", study_introduction);
+
     };
+
+    const getCourse = async() => {
+        await axios.get(`http://localhost:3001/api/course?id=${id}&pw=${pw}`)
+        .then((response) => {
+            // console.log("response.data: ", response.data);
+            setcourse_id(response.data.course_id);
+            setcourse_name(response.data.course_name);
+            setprofessor_name(response.data.professor_name)
+        });
+
+
+    };
+
+
+    // course_name[index], current, professor_name[index]
+    // "등록된 스터디 보기" 버튼을 누르면 course 화면으로 이동
+    const handleCourse = (event, course_name, course_id, professor_name) => {
+        event.preventDefault();
+        navigate("/CoursePage", {state: {
+            id: id, 
+            pw: pw, 
+            name: name,
+            student_number: student_number,
+            track: track,
+            study_name: study_name, /*스터디 개수를 알기 위해 필요*/ 
+            course_id: course_id,
+            course_name: course_name,
+            professor_name: professor_name
+        }});
+    };
+    // event, study_name_item, leader_id[index], student_number, number_limit[index], study_introduction[index])
+    const handleStudy = (event, study_name_item, leader_id_item, course_id_item, student_bumber, number_limit_item, study_introduction) => {
+        event.preventDefault();
+        navigate("/StudyBoardPage", {state: {
+            id: id,
+            pw: pw,
+            name: name,
+            student_number: student_number,
+            track: track,
+            study_name_list: study_name, /*스터디 개수를 알기 위해 필요*/ 
+            study_name: study_name_item,
+            // study_id: study_id,
+            student_number: student_number,
+            leader_id: leader_id_item,
+            course_id: course_id_item,
+            number_limit: number_limit_item,
+            study_introduction: study_introduction
+        }});
+    };
+
+    // "스터디 조회" 버튼을 누르면 스터디 조회 화면으로 이동
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const search_study_name = document.getElementById('search_study_name').value;
+
+    };
+
 
     useEffect(() => {
         setUp();
         getName();
         getStudy();
+        getCourse();
         console.log("useEffect 11");
         // console.log("here info: ", info);
-    }, [id, pw]);
+    }, [id, pw, name, student_number]);
 
     // <CardMedia
     //     component="img"
@@ -136,7 +204,7 @@ function Home(props){
                         <h2> 홈 화면 </h2>
                     </div>
                     <div className="study-box">   
-                        <Grid container spacing={2}>
+                        <Grid container spacing={8}>
                             <Grid item xs={6} md={8}>
                             <div className="text">
                                 <h2>{name}님이 참여하는 스터디</h2>
@@ -145,33 +213,40 @@ function Home(props){
                             {
                                 (study_name.length == 0) ? <h2> 아직 참가하는 스터디가 없습니다! </h2> :
                                
-                                study_name.map((current, index) => {
+                                study_name.map((study_name_item, index) => {
                                     // console.log("hello: ", current);
                                     return(
                                         <div className="study-box-box">
 
-                                            <Card sx={{ display: 'inline-block', maxWidth: 200, textAlign: 'left' }}>
+                                            <Card sx={{ display: 'inline-block', maxWidth: 200 , height: 250, textAlign: 'left' }}>
                                                 <CardActionArea>
                                                     
-                                                        <CardContent>
-                                                            <Typography gutterBottom variant="h6" component="div">
-                                                                {current}
+                                                    <CardContent>
+                                                        <Typography variant="h6" component="div">
+                                                            {study_name_item}
+                                                        </Typography>
+                                                        <Box sx={{ alignItems: 'left', pl: 1, pb: 1}}>
+                                                            <Typography gutterBottom variant="h7" component="div">
+                                                                스터디장: {leader_id[index]}
                                                             </Typography>
-                                                            <Box sx={{ alignItems: 'left', pl: 1, pb: 1}}>
-                                                                <Typography gutterBottom variant="h7" component="div">
-                                                                    스터디장: {leader_id[index]}
-                                                                </Typography>
-                                                                <Typography gutterBottom variant="h7" component="div">
-                                                                    학번: {studentNumber}
-                                                                </Typography>
-                                                                <Typography gutterBottom variant="h7" component="div">
-                                                                    인원수: {number_limit[index]}
-                                                                </Typography>
-                                                                <Typography variant="body2" color="text.secondary">
-                                                                    여기는 스터디 소개하는 글~
-                                                                </Typography>
-                                                            </Box>
-                                                        </CardContent>
+                                                            <Typography gutterBottom variant="h7" component="div">
+                                                                과목 코드: {course_id[index]}
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h7" component="div">
+                                                                인원수: {number_limit[index]}
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h7" component="div">
+                                                                내용: {study_introduction[index]}
+                                                            </Typography>
+
+                                                            {/* 스터디 페이지 버튼 */}
+                                                            
+                                                            <div className="btn-space"> 
+                                                                <button className="btn-study" onClick={(event => handleStudy(event, study_name_item, leader_id[index], course_id[index], student_number, number_limit[index], study_introduction[index]))}>스터디 가입</button>                                                               
+                                                            </div>
+                                                            
+                                                        </Box>
+                                                    </CardContent>
                                                     
                                                 </CardActionArea>
                                             </Card>
@@ -202,13 +277,13 @@ function Home(props){
                                                     아이디: {id}
                                                 </Typography>
                                                 <Typography gutterBottom variant="h7" component="div">
-                                                    학번: {studentNumber}
+                                                    학번: {student_number}
                                                 </Typography>
                                                 <Typography gutterBottom variant="h7" component="div">
                                                     소속: 기초학부
                                                 </Typography>
                                                 <Typography gutterBottom variant="h7" component="div">
-                                                    트랙: 전자공학
+                                                    트랙: {track}
                                                 </Typography>
                                                 <Typography gutterBottom variant="h7" component="div">
                                                     스터디 참가: {study_name.length} 개
@@ -224,7 +299,7 @@ function Home(props){
                             <Grid item xs={6} md={8}>
     
                                 <div className="text">
-                                    <h2>{name}님이 듣는 과목</h2>
+                                    <h2>{name}님이 현재 듣는 과목</h2>
                                 </div>   
 
                                 {
@@ -235,21 +310,31 @@ function Home(props){
                                         return(
                                             <div className="study-box-box">
 
-                                                <Card sx={{ display: 'inline-block', maxWidth: 200, textAlign: 'left' }}>
+                                                <Card sx={{ display: 'inline-block', width: 200, height: 180, textAlign: 'left'  }}>
                                                     <CardActionArea>
                                                         
-                                                            <CardContent>
-                                                                <Typography gutterBottom variant="h6" component="div">
-                                                                    과목 코드: {current}
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h6" component="div">
+                                                                {course_name[index]}
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h7" component="div">
+                                                                과목 코드: {current}
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h7" component="div">
+                                                                교수: {professor_name[index]}
+                                                            </Typography>
+                                                            {/* <Box sx={{ alignItems: 'left', pl: 1, pb: 1}}>
+                                                                <Typography gutterBottom variant="h7" component="div">
+                                                                    교수: {professor_name[index]}
                                                                 </Typography>
-                                                                <Box sx={{ alignItems: 'left', pl: 1, pb: 1}}>
-                                                                    <Typography gutterBottom variant="h7" component="div">
-                                                                        교수: 여기 해야함~
-                                                                    </Typography>
-                                                                    
-                                                                    
-                                                                </Box>
-                                                            </CardContent>
+                                                                
+                                                            </Box> */}
+                                                            {/* 스터디 페이지 버튼 */}
+                                                        
+                                                            <div className="btn-space">
+                                                                <button className="btn-course" onClick={(event) => handleCourse(event, course_name[index], current, professor_name[index])}>등록된 스터디 보기</button>                                                         
+                                                            </div>
+                                                        </CardContent>
                                                         
                                                     </CardActionArea>
                                                 </Card>
@@ -267,10 +352,28 @@ function Home(props){
 
                             </Grid>
                             <Grid item xs={6} md={4}>
-                                <h2> reservation  </h2>
-
-
-
+                                <div className="text">
+                                    <h2> 등록된 스터디 조회하기 </h2>
+                                </div>
+                                <div className="input-text-field">
+                                    <input id="search_study_name" placeholder="스터디 이름을 입력해주세요..." type="text"/>	
+                                    <button className="btn-search" onClick={handleSearch}>스터디 조회</button>
+                                    {/* <div className='btn-search'>
+                                        <button className="btn-course">등록된 스터디 보기</button>
+                                        <Button variant="contained" color="primary" onClick={handleSearch} disableElevation>
+                                            <p>제출하기</p>
+                                        </Button>	
+                                    </div> */}
+                                    
+                                    {/* <TextField 
+                                        id="filled-password-input"
+                                        label="스터디 이름을 입력하세요"
+                                        // type="password"
+                                        // autoComplete="current-password"
+                                        variant="filled"
+                                    /> */}
+                                    
+                                </div>
 
 
                             </Grid>
@@ -286,7 +389,7 @@ function Home(props){
                 <div className="footer">
                     <div className="blank">
                         <Link to="/">
-                            <button className="btn-submit-form2">로그아웃</button>
+                            <button className="btn-logout">로그아웃</button>
                         </Link>
                     </div>
                 </div>
