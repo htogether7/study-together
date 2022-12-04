@@ -14,7 +14,7 @@ const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 3001;
 const mysql = require("mysql");
 const { redirect } = require("react-router-dom");
-const { default: Home } = require("../src/Home");
+// const { default: Home } = require("../src/Home");
 
 const db = mysql.createConnection({
     host     : 'localhost',
@@ -159,7 +159,7 @@ app.get("/api/study", (req, res) => {
     // const sql = `SELECT * '+ 
     //             'FROM user WHERE user.id = "${submittedId}" and user.pw = "${submittedPw}"`;
     
-    const sql = 'SELECT study.name, study.leader_id, study.number_limit, study.course_id, study_introduction ' +
+    const sql = 'SELECT study.study_id, study.name, study.leader_id, study.number_limit, study.course_id, study_introduction ' +
                 'FROM study ' +
                 'INNER JOIN study_member AS sm ON sm.user_id = ' + mysql.escape(submittedId) + ' AND sm.study_id = study.study_id';
 
@@ -174,6 +174,7 @@ app.get("/api/study", (req, res) => {
             // const study_number_limit = [];
             // const study_course_id = [];
             // const info = [];
+            const study_id = [];
             const study_name = [];
             const leader_id = [];
             const number_limit = [];
@@ -190,6 +191,7 @@ app.get("/api/study", (req, res) => {
                 console.log(row.course_id);
                 // temp.push(row.name, row.leader_id, row.number_limit, row.course_id);
                 // info.push(temp)
+                study_id.push(row.study_id)
                 study_name.push(row.name);
                 leader_id.push(row.leader_id);
                 number_limit.push(row.number_limit);
@@ -205,6 +207,7 @@ app.get("/api/study", (req, res) => {
             });
             // console.log("study_name: ", study_name);
             res.json({
+                study_id: study_id,
                 study_name: study_name,
                 leader_id: leader_id,
                 number_limit: number_limit,
@@ -328,9 +331,11 @@ app.get("/api/coursepage/getleadername", (req, res) => {
 
 app.get("/api/studyboardpage/detail", (req, res) => {
     // console.log("study_detail!!");
-    const study_id = parseInt(req.query.id);
-    // console.log(study_id);
-    const sql = `select * from study where study_id=${study_id}`;
+    // const study_id = parseInt(req.query.id);
+    const study_id = req.query.id;
+    console.log("/api/studyboardpage/detail: ", study_id);
+    // const sql = 'select * from study where study_id=${study_id}';
+    const sql = 'select * from study where study_id= ' + mysql.escape(study_id);
     db.query(sql, (err, result, fields) => {
       if (err) throw err;
       else {
@@ -360,50 +365,49 @@ app.get("/api/studyboardpage/detail", (req, res) => {
     });
 });
 
-app.get("/api/studyboardpage/post", (req, res) => {
-    const studyId = req.query.id;
-    const sql = `select post.post_id, post.post_content, post.user_id from study
-    join post
-    on study.study_id = post.study_id
-    where study.study_id = ${studyId}`;
-    db.query(sql, (err, result, fields) => {
-      if (err) throw err;
-      else {
-        let postList = [];
-        Object.keys(result).forEach((key) => {
-          const row = result[key];
-          postList.unshift([row.post_id, row.post_content, row.user_id]);
-        });
+// app.get("/api/studyboardpage/post", (req, res) => {
+//     const studyId = req.query.id;
+//     const sql = 'select post.post_id, post.post_content, post.user_id from study' +
+//     'join post on study.study_id = post.study_id' + 
+//     'where study.study_id = ' + mysql.escape(studyId);
+//     db.query(sql, (err, result, fields) => {
+//       if (err) throw err;
+//       else {
+//         let postList = [];
+//         Object.keys(result).forEach((key) => {
+//           const row = result[key];
+//           postList.unshift([row.post_id, row.post_content, row.user_id]);
+//         });
   
-        // postList.sort((a, b) => a[0] - b[0]);
-        // postList = postList.reverse();
-        res.json({
-          postList: postList.reverse(),
-        });
-      }
-    });
-});
+//         // postList.sort((a, b) => a[0] - b[0]);
+//         // postList = postList.reverse();
+//         res.json({
+//           postList: postList.reverse(),
+//         });
+//       }
+//     });
+// });
 
-app.get("/api/studyboardpage/delete", (req, res) => {
-    const postId = req.query.id;
-    const sql = `delete from post where post.post_id=${parseInt(postId)}`;
-    db.query(sql, (err, result, fields) => {
-      if (err) throw err;
-    });
-  });
+// app.get("/api/studyboardpage/delete", (req, res) => {
+//     const postId = req.query.id;
+//     const sql = `delete from post where post.post_id=${parseInt(postId)}`;
+//     db.query(sql, (err, result, fields) => {
+//       if (err) throw err;
+//     });
+//   });
   
-app.get("/api/studyboardpage/edit", (req, res) => {
-    const postId = req.query.id;
-    const postContent = req.query.content;
-    const sql = `update post set post_content = "${postContent}" where post_id = ${parseInt(
-        postId
-    )}`;
-    db.query(sql, (err, result, fields) => {
-        if (err) throw err;
-    });
-    // console.log(sql);
-    // res.json({ a: 1 });
-});
+// app.get("/api/studyboardpage/edit", (req, res) => {
+//     const postId = req.query.id;
+//     const postContent = req.query.content;
+//     const sql = `update post set post_content = "${postContent}" where post_id = ${parseInt(
+//         postId
+//     )}`;
+//     db.query(sql, (err, result, fields) => {
+//         if (err) throw err;
+//     });
+//     // console.log(sql);
+//     // res.json({ a: 1 });
+// });
 
 
 

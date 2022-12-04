@@ -23,6 +23,7 @@ function Home(props){
     const [student_number, setstudent_number] = useState("");
     const [track, setTrack] = useState("");
 
+    const [study_id, setstudy_id] = useState("");
     const [study_name, setstudy_name] = useState([]);
     const [leader_id, setleader_id] = useState([]);
     const [number_limit, setnumber_limit] = useState([]);
@@ -76,6 +77,7 @@ function Home(props){
             // console.log("response.data 44: ", response.data.number_limit);
             // console.log("response.data 55: ", response.data.course_id);
             
+            setstudy_id(response.data.study_id);
             setstudy_name(response.data.study_name);
             setleader_id(response.data.leader_id);
             setnumber_limit(response.data.number_limit);
@@ -144,7 +146,7 @@ function Home(props){
         }});
     };
     // event, study_name_item, leader_id[index], student_number, number_limit[index], study_introduction[index])
-    const handleStudy = (event, study_name_item, leader_id_item, course_id_item, student_bumber, number_limit_item, study_introduction) => {
+    const handleStudy = (event, study_id_item, study_name_item, leader_id_item, course_id_item, student_bumber, number_limit_item, study_introduction) => {
         event.preventDefault();
         navigate("/StudyBoardPage", {state: {
             id: id,
@@ -154,7 +156,7 @@ function Home(props){
             track: track,
             study_name_list: study_name, /*스터디 개수를 알기 위해 필요*/ 
             study_name: study_name_item,
-            // study_id: study_id,
+            study_id: study_id_item,
             student_number: student_number,
             leader_id: leader_id_item,
             course_id: course_id_item,
@@ -242,7 +244,7 @@ function Home(props){
                                                             {/* 스터디 페이지 버튼 */}
                                                             
                                                             <div className="btn-space"> 
-                                                                <button className="btn-study" onClick={(event => handleStudy(event, study_name_item, leader_id[index], course_id[index], student_number, number_limit[index], study_introduction[index]))}>스터디 가입</button>                                                               
+                                                                <button className="btn-study" onClick={(event => handleStudy(event, study_id[index], study_name_item, leader_id[index], course_id[index], student_number, number_limit[index], study_introduction[index]))}>자세히 보기</button>                                                               
                                                             </div>
                                                             
                                                         </Box>

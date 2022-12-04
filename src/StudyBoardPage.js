@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
 const StudyBoardPage = ({ match }) => {
-    const { study_id } = useParams();
+    // const { study_id } = useParams();
     //   const [studyId, setStudyId] = useState(parseInt(id));
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
@@ -24,7 +24,7 @@ const StudyBoardPage = ({ match }) => {
     const [studyNameList, setStudyNameList] = useState([]);
 
     const [studyName, setStudyName] = useState("");
-    // const [studyId, setStudyId] = useState("");
+    const [studyId, setStudyId] = useState("");
     const [leaderId, setLeaderId] = useState("");
     const [numberLimit, setnumberLimit] = useState("");
     const [leaderName, setLeaderName] = useState("");
@@ -46,7 +46,7 @@ const StudyBoardPage = ({ match }) => {
         setStudyNameList(location.state.study_name_list);
 
         setStudyName(location.state.study_name);
-        // setStudyId(location.state.study_id);
+        setStudyId(location.state.study_id);
         setLeaderId(location.state.leader_id);
         setnumberLimit(location.state.number_limit);
         // setLeaderName(location.state.leaderName);
@@ -57,10 +57,11 @@ const StudyBoardPage = ({ match }) => {
 
     //   console.log(id);
     const getStudyDetail = () => {
+        console.log("StudyBoardPage getStudyDetail() 1: ", studyId);
         axios
-        .get(`http://localhost:3001/api/studyboardpage/detail?id=${id}`)
+        .get(`http://localhost:3001/api/studyboardpage/detail?id=${studyId}`)
         .then((response) => {
-            console.log("StudyBoardPage getStudyDetail(): ", response.data);
+            console.log("StudyBoardPage getStudyDetail() 2: ", response.data);
             // setStudyName(response.data.name);
             // setLeaderId(response.data.leaderId);
             // setCourseId(response.data.courseId);
@@ -70,20 +71,20 @@ const StudyBoardPage = ({ match }) => {
     };
 
     const getPost = () => {
-        axios.get(`http://localhost:3001/api/studyboardpage/post?id=${id}`).then((response) => {
+        axios.get(`http://localhost:3001/api/studyboardpage/post?id=${studyId}`).then((response) => {
         setPostList(response.data.postList.reverse());
         });
     };
 
-    const deletePost = (post_id) => {
-        // console.log(post_id);
-        axios.get(`http://localhost:3001/api/studyboardpage/delete?id=${post_id}`);
-        getPost();
-    };
+    // const deletePost = (post_id) => {
+    //     // console.log(post_id);
+    //     axios.get(`http://localhost:3001/api/studyboardpage/delete?id=${post_id}`);
+    //     getPost();
+    // };
 
-    const editPost = (post_id) => {
-        axios.get(`http://localhost:3001/api/studyboardpage/edit?id=${post_id}`);
-    };
+    // const editPost = (post_id) => {
+    //     axios.get(`http://localhost:3001/api/studyboardpage/edit?id=${post_id}`);
+    // };
 
     // "스터디 조회" 버튼을 누르면 스터디 조회 화면으로 이동
     const handleSearch = (e) => {
@@ -141,7 +142,8 @@ const StudyBoardPage = ({ match }) => {
                                                 <td>{arr[2]}</td>
 
                                                 {location.state.id == arr[2] ? (
-                                                    <button onClick={() => deletePost(arr[0])}>삭제</button>
+                                                    // <button onClick={() => deletePost(arr[0])}>삭제</button>
+                                                    <button>삭제</button>
                                                 ) : (
                                                     <></>
                                                 )}
@@ -272,7 +274,8 @@ const StudyBoardPage = ({ match }) => {
                     <td>{arr[2]}</td>
 
                     {location.state.id == arr[2] ? (
-                        <button onClick={() => deletePost(arr[0])}>삭제</button>
+                        <button>삭제</button>
+                        // <button onClick={() => deletePost(arr[0])}>삭제</button>
                     ) : (
                         <></>
                     )}
