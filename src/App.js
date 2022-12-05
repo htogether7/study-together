@@ -6,6 +6,7 @@ import Login from './Login.js'
 import Home from './Home.js';
 import CoursePage from './CoursePage.js';
 import StudyBoardPage from './StudyBoardPage.js';
+import StudyEnrollPage from './StudyEnrollPage.js';
 // import Main from './Home.js';
 // import Soldier from './Soldier.js';
 // import Give_points from './Give_points';
@@ -26,6 +27,7 @@ class App extends React.Component {
 					<Route path="/Home" element={<Home/>} />
 					<Route path="/CoursePage" element={<CoursePage/>} />
 					<Route path="/StudyBoardPage" element={<StudyBoardPage/>} />
+					<Route path="/StudyEnrollPage" element={<StudyEnrollPage/>} />
 				</Routes>
 			</HashRouter>
 			

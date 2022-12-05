@@ -28,8 +28,9 @@ function Home(props){
     const [leader_id, setleader_id] = useState([]);
     const [number_limit, setnumber_limit] = useState([]);
     const [study_introduction, setstudy_introduction] = useState([]);
-
     const [course_id, setcourse_id] = useState([]);
+
+    const [take_course_id, settake_course_id] = useState([]);
     const [course_name, setcourse_name] = useState([]);
     const [professor_name, setprofessor_name] = useState([]);
 
@@ -120,7 +121,7 @@ function Home(props){
         await axios.get(`http://localhost:3001/api/course?id=${id}&pw=${pw}`)
         .then((response) => {
             // console.log("response.data: ", response.data);
-            setcourse_id(response.data.course_id);
+            settake_course_id(response.data.course_id);
             setcourse_name(response.data.course_name);
             setprofessor_name(response.data.professor_name)
         });
@@ -220,7 +221,7 @@ function Home(props){
                                     return(
                                         <div className="study-box-box">
 
-                                            <Card sx={{ display: 'inline-block', maxWidth: 200 , height: 250, textAlign: 'left' }}>
+                                            <Card sx={{ display: 'flex', minWidth: 200, maxWidth: 210 , minHeight: 250, textAlign: 'left', alignItems: 'left'}}>
                                                 <CardActionArea>
                                                     
                                                     <CardContent>
@@ -305,9 +306,9 @@ function Home(props){
                                 </div>   
 
                                 {
-                                    (course_id.length == 0) ? <h2> 아직 듣는 수업이 없습니다! </h2> :
+                                    (take_course_id.length == 0) ? <h2> 아직 듣는 수업이 없습니다! </h2> :
                                 
-                                    course_id.map((current, index) => {
+                                    take_course_id.map((current, index) => {
                                         // console.log("hello: ", current);
                                         return(
                                             <div className="study-box-box">
@@ -354,28 +355,30 @@ function Home(props){
 
                             </Grid>
                             <Grid item xs={6} md={4}>
-                                <div className="text">
-                                    <h2> 등록된 스터디 조회하기 </h2>
-                                </div>
-                                <div className="input-text-field">
-                                    <input id="search_study_name" placeholder="스터디 이름을 입력해주세요..." type="text"/>	
-                                    <button className="btn-search" onClick={handleSearch}>스터디 조회</button>
-                                    {/* <div className='btn-search'>
-                                        <button className="btn-course">등록된 스터디 보기</button>
-                                        <Button variant="contained" color="primary" onClick={handleSearch} disableElevation>
-                                            <p>제출하기</p>
-                                        </Button>	
-                                    </div> */}
+
+                                <div className="right-box">
                                     
-                                    {/* <TextField 
-                                        id="filled-password-input"
-                                        label="스터디 이름을 입력하세요"
-                                        // type="password"
-                                        // autoComplete="current-password"
-                                        variant="filled"
-                                    /> */}
+                                    <Card sx={{maxWidth: 250, height: 200, columnGap: 4}}>
+                                    
+                                        <div className="text">
+                                            <h3> 스터디 조회하기 </h3>
+                                        </div>
+                                        <div className="input-text-field">
+                                            <input id="search_study_name" placeholder="스터디 이름을 입력해주세요..." type="text"/>	
+                                            <button className="btn-search" onClick={handleSearch}>스터디 조회</button>
+                                            {/* <div className='btn-search'>
+                                                <button className="btn-course">등록된 스터디 보기</button>
+                                                <Button variant="contained" color="primary" onClick={handleSearch} disableElevation>
+                                                    <p>제출하기</p>
+                                                </Button>	
+                                            </div> */}
+                                        
+                                        </div>
+                                    </Card>
+
                                     
                                 </div>
+
 
 
                             </Grid>

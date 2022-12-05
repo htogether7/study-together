@@ -11,6 +11,7 @@ function Signup() {
     const [name, setName] = useState("");
     const [studentNumber, setStudentNumber] = useState(0);
     const [track, setTrack] = useState('');
+    const [takeCourse, setTakeCourse] = useState('');
     const [errMessage, setErrMessage] = useState(0);
     const navigate = useNavigate();
     
@@ -21,10 +22,21 @@ function Signup() {
     const [nameError, setnameError] = useState('');
     const [studentNumberError, setstudentNumberError] = useState('');
     const [trackError, settrackError] = useState('');
+    const [takecourseError, settakecourseError] = useState('');
     const [signupError, setsignupError] = useState('');
 
 
-    const handleSignUp = (e) => {
+    const clearinputs = () => {
+		document.getElementById("id").value ='';
+		document.getElementById("pw").value ='';
+		document.getElementById("checkPw").value ='';
+		document.getElementById("name").value ='';
+		document.getElementById("studentNumber").value ='';
+        document.getElementById("track").value ='';
+        document.getElementById("takecourse").value ='';
+	};
+
+    const handleSignUp = async (e) => {
         console.log("in handleSignUp");
         e.preventDefault();
 
@@ -34,8 +46,9 @@ function Signup() {
         const _name = document.getElementById("name").value;
         const _studentNumber = document.getElementById("studentNumber").value;
         const _track = document.getElementById("track").value;
+        const _takecourse = document.getElementById("takecourse").value;
         const _track_list = ['물리학', '화학', '생명과학', '기계공학', '전자공학', '화학공학', '컴퓨터공학', '재료공학'];
-        var [flag1, flag2, flag3, flag4, flag5, flag6] = [false, false, false, false, false];
+        var [flag1, flag2, flag3, flag4, flag5, flag6, flag7] = [false, false, false, false, false, false];
 
         if(_id === ''){
             setidError("아이디를 입력해주세요");
@@ -84,9 +97,17 @@ function Signup() {
             settrackError("");
             flag6 = true;
         }
-        console.log("flag: ", flag1, flag2, flag3, flag4, flag5, flag6);
 
-        if(flag1 && flag2 && flag3 && flag4 && flag5 && flag6){
+        if(_takecourse === ''){
+            settakecourseError("수강 과목을 입력해주세요"); 
+        } else{
+            settakecourseError("");
+            flag7 = true;
+        }
+
+        console.log("flag: ", flag1, flag2, flag3, flag4, flag5, flag6, flag7);
+
+        if(flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7){
             console.log("in if");
             setId(_id);
             setPw(_pw);
@@ -94,14 +115,15 @@ function Signup() {
             setName(_name);
             setStudentNumber(_studentNumber);
             setTrack(_track);
-
-            axios
+            setTakeCourse(_takecourse);
+            await axios
                 .get(
-                    `http://localhost:3001/api/check?id=${_id}&pw=${_pw}&checkPw=${_checkPw}&name=${_name}&studentNumber=${_studentNumber}&track=${_track}`
+                    `http://localhost:3001/api/check?id=${_id}&pw=${_pw}&checkPw=${_checkPw}&name=${_name}&studentNumber=${_studentNumber}&track=${_track}&takecourse=${_takecourse}`
                 )
                 .then((response) => {
                     if (response.data.signup == 1) {
                         setsignupError("성공적으로 회원가입 되었습니다!");
+                        clearinputs();
                         // navigate("/");
                     } else if (response.data.signup == 2) {
                         setErrMessage(2);
@@ -110,6 +132,7 @@ function Signup() {
                     } else if (response.data.signup == 3) {
                         setErrMessage(3);
                         setsignupError("이미 존재하는 아이디입니다!");
+                        clearinputs();
                         console.log("이미 존재하는 아이디입니다");
                     }
                 });
@@ -160,6 +183,15 @@ function Signup() {
                         <p className="small">* 공학: 기계공학, 전자공학, 화학공학, 컴퓨터공학, 재료공학</p>
                         <input id="track" placeholder="트랙을 적어주세요..." type="text"/>
                         <p className="errorMsg">{trackError}</p>
+
+                        <h2>수강하고 있는 수업</h2>
+                        <p className="small">* 컴퓨터공학 트랙/전자공학 트랙</p>
+                        <p className="small">* 컴퓨터 알고리즘: CSE301, 딥러닝개론: CSE303, 운영체제: CSE304, 데이터베이스개론: CSE401</p>
+                        <p className="small">* 컴퓨터 네트워크: CSE403, 통신의 기초: EE305, 전자소자개론: EE302</p>
+                        <p className="small">* 예시: CSE301, CSE303, CSE401</p>
+                        <input id="takecourse" placeholder="수업을 컴마로 구분해서 적어주세요..." type="text"/>
+                        <p className="errorMsg">{takecourseError}</p>
+
                         <p className="errorMsg">{signupError}</p>
 
                     </div>

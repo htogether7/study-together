@@ -31,6 +31,10 @@ const StudyBoardPage = ({ match }) => {
     const [courseId, setCourseId] = useState("");
     const [studyIntro, setStudyIntro] = useState("");
     const [postList, setPostList] = useState([]);
+    const [courseName, setCourseName] = useState("");
+
+    const [content, setContent] = useState("");
+    const [presentPeople, setPresentPeople] = useState(0);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -59,9 +63,9 @@ const StudyBoardPage = ({ match }) => {
     const getStudyDetail = () => {
         console.log("StudyBoardPage getStudyDetail() 1: ", studyId);
         axios
-        .get(`http://localhost:3001/api/studyboardpage/detail?id=${studyId}`)
-        .then((response) => {
-            console.log("StudyBoardPage getStudyDetail() 2: ", response.data);
+            .get(`http://localhost:3001/api/studyboardpage/detail?id=${studyId}`)
+            .then((response) => {
+                console.log("StudyBoardPage getStudyDetail() 2: ", response.data);
             // setStudyName(response.data.name);
             // setLeaderId(response.data.leaderId);
             // setCourseId(response.data.courseId);
@@ -69,38 +73,88 @@ const StudyBoardPage = ({ match }) => {
             // setLeaderName(response.data.leaderName);
         });
     };
-
-    const getPost = () => {
-        axios.get(`http://localhost:3001/api/studyboardpage/post?id=${studyId}`).then((response) => {
-        setPostList(response.data.postList.reverse());
+    const getPresentPeople = () => {
+        axios
+            .get(`http://localhost:3001/api/studyboardpage/people?id=${studyId}`)
+            .then((response) => {
+                setPresentPeople(response.data.presentPeople);
         });
     };
-
-    // const deletePost = (post_id) => {
-    //     // console.log(post_id);
-    //     axios.get(`http://localhost:3001/api/studyboardpage/delete?id=${post_id}`);
-    //     getPost();
-    // };
-
-    // const editPost = (post_id) => {
-    //     axios.get(`http://localhost:3001/api/studyboardpage/edit?id=${post_id}`);
-    // };
+    
+    const getPost = () => {
+        axios
+            .get(`http://localhost:3001/api/studyboardpage/post?id=${studyId}`)
+            .then((response) => {
+                setPostList(response.data.postList);
+        });
+    };
+    
+    const getCourseName = () => {
+        axios
+            .get(`http://localhost:3001/api/studyboardpage/coursename?id=${courseId}`)
+            .then((response) => {
+                setCourseName(response.data.name);
+        });
+    };
+    
+    const getName = () => {
+        axios
+            .get(`http://localhost:3001/api/studyboardpage/name?id=${leaderId}`)
+            .then((response) => {
+                setName(response.data.name);
+            });
+    };
+    
+    const deletePost = (post_id) => {
+        // console.log(post_id);
+        axios.get(`http://localhost:3001/api/studyboardpage/delete?id=${post_id}`);
+        getPost();
+    };
 
     // "스터디 조회" 버튼을 누르면 스터디 조회 화면으로 이동
     const handleSearch = (e) => {
-        const search_study_name = document.getElementById('search_study_name').value;
+        const search_study_name = document.getElementById("search_study_name")
+        .value;
+    };
 
+    const handleMake = (e) => {
+        if (content.length > 0) {
+        setContent("");
+        axios.get(
+            `http://localhost:3001/api/studyboardpage/make?id=${id}&content=${content}&study_id=${studyId}`
+        );
+        window.location.reload();
+        getPost();
+        }
+    };
+
+    const handleChange = (e) => {
+        setContent(e.target.value);
+    };
+
+    const handleEdit = (post_id) => {
+        setContent("");
+
+        axios.get(
+        `http://localhost:3001/api/studyboardpage/edit?content="${content}"&id=${post_id}`
+        );
+        window.location.reload();
+        getPost();
     };
 
     //`http://localhost:3001/api/study?id=${id}&pw=${pw}`
     useEffect(() => {
         setUp();
-        getStudyDetail();
         getPost();
+        getPresentPeople();
+        getCourseName();
+        getName();
+        setUp();
+        getStudyDetail();
         console.log("useEffect in StudyBoardPage");
         // console.log("스터디!");
     }, [id, pw, leaderId, courseId, studyIntro, leaderName]);
-    console.log(postList);
+    // console.log(postList);
 
     return (
         <div>
@@ -123,10 +177,10 @@ const StudyBoardPage = ({ match }) => {
                                 </div>  
 
                                 <div className="left-box">
-                                    <h3> 과목: {courseId} </h3>
-                                    <h3> 스터디장: {leaderId} </h3>
-                                    <h3> 최대인원: {numberLimit} </h3>
-                                    <h3> 소개: {studyIntro}</h3>
+                                    <h3> 과목: {courseName}({courseId}) </h3>
+                                    <h3> 스터디장: {name}({leaderId}) </h3>
+                                    <h3> 최대인원: {presentPeople} / {numberLimit} </h3>
+                                    <h3> 소개: {studyIntro} </h3>
                                 </div>
 
                                 <div className="text">
@@ -134,38 +188,25 @@ const StudyBoardPage = ({ match }) => {
                                     <div className="left-box">
 
                                         <table>
-                                            <th>내용</th>
-                                            <th>작성자</th>
+                                            <th width="450">내용</th>
+                                            <th width="80">작성자</th>
                                             {postList.map((arr, ind) => (
-                                                <tr>
-                                                <td>{arr[1]}</td>
-                                                <td>{arr[2]}</td>
+                                            <tr>
+                                                <td width="450" height="20">{arr[1]}</td>
+                                                <td width="80" height="20">{arr[2]}</td>
 
                                                 {location.state.id == arr[2] ? (
-                                                    // <button onClick={() => deletePost(arr[0])}>삭제</button>
-                                                    <button>삭제</button>
+                                                    <button className="btn-s" onClick={() => deletePost(arr[0])}> 삭제 </button>
                                                 ) : (
+                                                    // <button>삭제</button>
                                                     <></>
                                                 )}
                                                 {location.state.id == arr[2] ? (
-                                                    <button
-                                                    onClick={() =>
-                                                        navigate(`/edit/${arr[0]}`, {
-                                                        state: {
-                                                            id: arr[0],
-                                                            content: arr[1],
-                                                            study_id: id,
-                                                            user: arr[2],
-                                                        },
-                                                        })
-                                                    }
-                                                    >
-                                                    수정
-                                                    </button>
+                                                    <button className="btn-s" onClick={() => { handleEdit(arr[0]); }}> 수정 </button>
                                                 ) : (
                                                     <></>
                                                 )}
-                                                </tr>
+                                            </tr>
                                             ))}
                                         </table>
 
@@ -173,7 +214,17 @@ const StudyBoardPage = ({ match }) => {
                                     
 
                                 </div>  
-
+                                <div style={{ display: "flex", position: "relative", left: 50 }}>
+                                    <textarea
+                                        className="textarea"
+                                        placeholder="글을 입력하고 생성 또는 수정을 누르세요"
+                                        onChange={(e) => handleChange(e)}
+                                        style={{ weight: "100px", height: "60px", resize: "none" }}
+                                    ></textarea>
+                                    <button onClick={(e) => { handleMake(e);}} className="btn-make">
+                                        게시글 생성
+                                    </button>
+                                </div>                        
 
                             </Grid>
                             <Grid item xs={4}>
@@ -247,72 +298,9 @@ const StudyBoardPage = ({ match }) => {
                         </Link>
                     </div>
                 </div>
+
             </div>
 
-
-
-
-
-
-
-            <h1>{studyName}</h1>
-            <div>
-                <ul>
-                <li>과목 : {courseId}</li>
-                <li>스터디장 : {leaderId}</li>
-                <li>스터디 소개 : {studyIntro}</li>
-                </ul>
-            </div>
-            <div>
-                <div>게시글</div>
-                <table>
-                <th>내용</th>
-                <th>작성자</th>
-                {postList.map((arr, ind) => (
-                    <tr>
-                    <td>{arr[1]}</td>
-                    <td>{arr[2]}</td>
-
-                    {location.state.id == arr[2] ? (
-                        <button>삭제</button>
-                        // <button onClick={() => deletePost(arr[0])}>삭제</button>
-                    ) : (
-                        <></>
-                    )}
-                    {location.state.id == arr[2] ? (
-                        <button
-                        onClick={() =>
-                            navigate(`/edit/${arr[0]}`, {
-                            state: {
-                                id: arr[0],
-                                content: arr[1],
-                                study_id: id,
-                                user: arr[2],
-                            },
-                            })
-                        }
-                        >
-                        수정
-                        </button>
-                    ) : (
-                        <></>
-                    )}
-                    </tr>
-                ))}
-                </table>
-            </div>
-            <button
-                onClick={() =>
-                navigate(`/make`, {
-                    state: {
-                    study_id: id,
-                    user: location.state.id,
-                    },
-                })
-                }
-            >
-                게시글 생성
-            </button>
         </div>
   );
 };

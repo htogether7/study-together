@@ -34,7 +34,7 @@
   /* margin-left: 500px; */
 }
 
-.home { 
+.study-enroll { 
   width: 100%;
   min-height: 100vh;
   padding: 0 0px;
@@ -48,7 +48,7 @@
 }
 
 /* 흰색 가운데 상자 */
-.home .homeContainer {
+.study-enroll .study-enrollContainer {
   /* padding: 60px; */
   /* margin: auto; 이걸로 하면 완전 중앙에 온다.. margin-top 으로 조절해줘야함*/
   width: 100%;
@@ -80,16 +80,16 @@
   /* text-align: center; */
 }
 
-.home .homeContainer .text {
+.study-enroll .study-enrollContainer .text {
   text-align: center;
   color: #627DFE;
   margin-bottom: 10px;
   font-size: 2 rem;
   font-family: 'Gowun Dodum', sans-serif; 
-  margin-top: -10px;
+  margin-top: 20px;
 }
 
-.home .homeContainer .study-box {
+.study-enroll .study-enrollContainer .study-box {
   /* text-align: left; */
   /* display: flex; */
   text-align: center;
@@ -98,23 +98,104 @@
 }
 
 /* 이거 길을 잃었다.. */
-.home .homeContainer .study-box .text > h2 {
+.study-enroll .study-enrollContainer .study-box .text > h2 {
   text-align: left;
   font-family: 'Gowun Dodum', sans-serif; 
   margin-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
-.home .homeContainer .study-box .right-box {
+.study-enroll .study-enrollContainer .study-box .enroll-box {
+  /* text-align: left; */
+  /* display: flex; */
+  /* text-align: center; */
+  margin-top: 50px;
+  margin-left: 30px;
+  /* justify-items: center; */
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box .btn {
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding: 10px 10px;
+  border-radius: 7px;
+  color: rgb(255, 255, 255);
+  font-size: 15px;
+  background: #627DFE;/*#ffd500;*/
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.13);
+  transition: all 0.2s ease;
+  margin-bottom: 25px;  
+  width: 140px;
+  font-family: 'Gowun Dodum', sans-serif;
+  margin-left: 30px;
+  /* font-family: 'Gowun Dodum', sans-serif;  */
+  transition-duration: 0.5s;
+  text-decoration: none;
+  overflow: hidden;
+  /* justify-content: center; */
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box > p {
+  color: #ff0000;
+  margin-top:-10px;
+  margin-bottom:20px;
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box .btn:hover {
+  background:rgb(255, 255, 255);
+  box-shadow:0px 2px 10px 5px #97B1BF;
+  color:#000;
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box .enroll-box-box{
+  /* text-align: left; */
+  display: flex;
+  /* justify-items: right; */
+  
+  margin-top: 15px;
+  margin-left: 50px;
+  margin-bottom: 30px;
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box .enroll-box-box > input[type=text]{
+  border: 0;
+  border-bottom: 1px solid #f2f3f8;
+  /* text-align: left; */
+  margin-top: 10px; 
+  margin-bottom: 10px;
+  margin-left: 60px;
+  font-size: 1.0rem;
+  transition: all 0.2s ease;
+  width: 350px;
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box .enroll-box-box > input::placeholder{
+  font-size: 15px;
+
+}
+
+.study-enroll .study-enrollContainer .study-box .enroll-box .small{
+  color: violet;
+  font-size: 14px;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  margin-left: 140px;
+  font-family: 'Gowun Dodum', sans-serif;
+  text-align: left;
+}
+
+.study-enroll .study-enrollContainer .study-box .right-box {
   margin-top: 20px;
 }
 
-.home .homeContainer .study-box .right-box .text > h3 {
-  margin-top: 40px;
-  color: #000000;
+.study-enroll .study-enrollContainer .study-box .right-box .text > h3 {
+    color: #000000;
 }
 
-.home .homeContainer .study-box .study-box-box {
+.study-enroll .study-enrollContainer .study-box .study-box-box {
   /* width: 100%;
   height: 100%;
   margin: 0 10px;
@@ -130,18 +211,19 @@
   cursor: pointer; */
   flex-direction: column;
   display: inline-block;
-  /* margin-top: 10px; */
+  margin-top: 10px;
   margin-left: 10px;
   margin-bottom: 10px;
 }
 
-.home .btn-space {
+.study-enroll .btn-space {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 50px;
+  /* margin-bottom: 10px; */
 }
 
-.home .btn-space .btn-study {
+.study-enroll .btn-space .btn-study {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -165,13 +247,13 @@
   overflow: hidden;
 }
 
-.home .btn-space .btn-study:hover {
+.study-enroll .btn-space .btn-study:hover {
   background:rgb(255, 255, 255);
   box-shadow:0px 2px 10px 5px #97B1BF;
   color:#000;  
 }
 
-.home .btn-space .btn-course {
+.study-enroll .btn-space .btn-course {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -195,22 +277,22 @@
   overflow: hidden;
 }
 
-.home .btn-space .btn-course:hover {
+.study-enroll .btn-space .btn-course:hover {
   background:rgb(255, 255, 255);
   box-shadow:0px 2px 10px 5px #97B1BF;
   color:#000;  
 }
 
-.home .homeContainer .study-box .input-text-field {
-	display: flex;
+.study-enroll .study-enrollContainer .study-box .input-text-field {
+  display: flex;
   flex-direction: column;
-	margin-top: 0px;
+  margin-top: 0px;
   /* justify-content: center; */
   /* 아래것만 먹는데 이걸 하면 또 중간은 아니다.. 뭐지? */
   /* align-items: center; */
 }
 	
-.home .homeContainer .study-box .input-text-field > input[type=text] {
+.study-enroll .study-enrollContainer .study-box .input-text-field > input[type=text] {
   border: 0;
   border-bottom: 2px solid #f2f3f8;
   /* text-align: center; */
@@ -227,7 +309,7 @@
 }
 
 /* btn-search */
-.home .homeContainer .study-box .input-text-field .btn-search {
+.study-enroll .study-enrollContainer .study-box .input-text-field .btn-search {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -258,22 +340,29 @@
 }
 
 /* #97B1B */
-.home .homeContainer .study-box .input-text-field .btn-search:hover{
+.study-enroll .study-enrollContainer .study-box .input-text-field .btn-search:hover{
    background:rgb(255, 255, 255);
    box-shadow:0px 2px 10px 5px #97B1BF;
    color:#000;
 }
 
-.home .footer .blank {
-  display: flex;
-  margin-top: 20px;
+.study-enroll .footer .blank {
+  /* display: flex; */
+  /* margin-top: 20px; */
+
+  /* margin-left: 10px; */
   /* margin-bottom: 20px; */
-  text-align: center;
+  /* text-align: left; */
   /* margin-left: 20px; */
   /* margin-right: 20px; */
+    /* display: flex;
+    justify-content: space-around;
+    align-items: center; */
+    margin-top: 20px;
+    margin-left: -40px;
 }
 
-.home .footer .blank .btn-logout {
+.study-enroll .footer .blank .btn-logout {
   border: 0;
   appearance: none;
   -webkit-appearance: none;
@@ -294,9 +383,10 @@
   transition-duration: 0.5s;
   text-decoration: none;
   overflow: hidden;
+  /* justify-content: center; */
 }
 
-.home .footer .blank .btn-logout:hover {
+.study-enroll .footer .blank .btn-logout:hover {
   background:rgb(255, 255, 255);
   box-shadow:0px 2px 10px 5px #97B1BF;
   color:#000;
