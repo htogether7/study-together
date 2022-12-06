@@ -597,18 +597,19 @@ app.get("/api/studyboardpage/coursename", (req, res) => {
     });
 });
   
-// app.get("/api/studyboardpage/edit", (req, res) => {
-//     const postId = req.query.id;
-//     const postContent = req.query.content;
-//     const sql = `update post set post_content = "${postContent}" where post_id = ${parseInt(
-//         postId
-//     )}`;
-//     db.query(sql, (err, result, fields) => {
-//         if (err) throw err;
-//     });
-//     // console.log(sql);
-//     // res.json({ a: 1 });
-// });
+
+app.get("/api/studyboardpage/edit", (req, res) => {
+    const postId = req.query.id;
+    const postContent = req.query.content;
+    const sql = `update post set post_content = "${postContent}" where post_id = ${parseInt(
+        postId
+    )}`;
+    db.query(sql, (err, result, fields) => {
+        if (err) throw err;
+    });
+    // console.log(sql);
+    // res.json({ a: 1 }); 
+});
 
 
 //////////////////////////////////////

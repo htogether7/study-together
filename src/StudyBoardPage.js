@@ -153,7 +153,7 @@ const StudyBoardPage = ({ match }) => {
         getStudyDetail();
         console.log("useEffect in StudyBoardPage");
         // console.log("스터디!");
-    }, [id, pw, leaderId, courseId, studyIntro, leaderName]);
+    }, ); // [id, pw, leaderId, courseId, studyIntro, leaderName] 이거 제외하면 무한 업로딩이지만 오류가 없다!
     // console.log(postList);
 
     return (
